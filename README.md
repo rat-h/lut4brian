@@ -11,8 +11,8 @@ First, before simulation, one needs to precompute lookup tables for values of $m
 Usually, this range goes between the lowest possible to the highest possible voltages.
 The range is divided into intervals with constant steps.
 For example, this may be a range from −100 to 60 mV with 1 mV step. 
-With precomputed tables, one solves differential equations using linear interpolation between table rows instead of computing exponential functions. 
-The voltage at a current time moment of a numerical solution is used to find indices of two rows in the lookup table closest to the membrane voltage.
+With precomputed tables, one solves differential equations using linear interpolation between table columns instead of computing exponential functions. 
+The voltage at a current time moment of a numerical solution is used to find indices of two columns in the lookup table closest to the membrane voltage.
 Using these two indices, one can query values for all steady-states and time constants of gating variables and linearly interpolate between
 these values - like this:
 ![Illustration of lookup table approximation, as a linear interpolation between values in the table (red lines at the base of each arch). ](images/SP-Figure1.jpg)
