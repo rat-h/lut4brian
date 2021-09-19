@@ -15,12 +15,12 @@ With precomputed tables, one solves differential equations using linear interpol
 The voltage at a current time moment of a numerical solution is used to find indices of two rows in the lookup table closest to the membrane voltage.
 Using these two indices, one can query values for all steady-states and time constants of gating variables and linearly interpolate between
 these values - like this:
-![ Illustration of lookup table approximation, as a linear interpolation between values in the table (red lines at the base of each arch). ](images/SP-Figure1.jpg)
+![Illustration of lookup table approximation, as a linear interpolation between values in the table (red lines at the base of each arch). ](images/SP-Figure1.jpg)
 
 
 ### How to use it in Brian2?
 You need to install the module `lut4brian` first.
-```
+```bash
 pip install lut4brian --user
 ```
 In the code one needs to import the module and set up 4 critical module variables:
@@ -31,6 +31,7 @@ In the code one needs to import the module and set up 4 critical module variable
 - lut4brian.tbl  - is a `numpy` array with all your values. Rows are different variables ($m_\infty(v)$, $h_\infty(v)$, etc.). Columns are values for the index.
 
 Here is an example of the code:
+
 ```python
 from brian2 import *
 from lut4brian import *
@@ -57,9 +58,8 @@ ntau    = 1./(alpha_n+beta_n)
 ninf    = alpha_n*ntau
 
 lut4brian.tbl = array([minf,hinf,htau,ninf,ntau])
-
 ```
-The table `lut4brian.tbl`' has shape, in this case, `(5, 151)` - 5 variable to table for 151 points each
+The table `lut4brian.tbl` has shape, in this case, `(5, 151)` - 5 variables tabled for 151 points each
 
 For `cpp_standalone` and `cython` targets, one _needs to create the table on the level of C-code/Cython_ - simple, just call
 ```python
