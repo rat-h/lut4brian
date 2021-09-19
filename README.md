@@ -4,7 +4,7 @@
 Brian is a free, open source simulator for spiking neural networks. It is written in the Python programming language and is available on almost all platforms. We believe that a simulator should not only save the time of processors, but also the time of scientists. Brian is therefore designed to be easy to learn and use, highly flexible and easily extensible.
 
 ### What is Lookup table approximation?
-The lookup-table approximation is a classical method for computation acceleration in a numerical problem of these kinds, known for centuries. 
+The lookup-table approximation is a classical method for computation acceleration in a numerical problem, known for centuries. 
 It is extensively used in such software as NEURON and GENESIS, but I kind of miss it in Brian. 
 This approximation is based on a straightforward algorithm: 
 First, before simulation, one needs to precompute lookup tables for values of $m_\infty(v)$, $h_\infty(v)$, and so on in a full range of voltages. 
@@ -15,7 +15,7 @@ With precomputed tables, one solves differential equations using linear interpol
 The voltage at a current time moment of a numerical solution is used to find indices of two rows in the lookup table closest to the membrane voltage.
 Using these two indices, one can query values for all steady-states and time constants of gating variables and linearly interpolate between
 these values - like this:
-![ Illustration of lookup table approximation, as a linear interpolation between values in the table (red lines at the base of each arch). ](images/SP-Figure1.svg)
+![ Illustration of lookup table approximation, as a linear interpolation between values in the table (red lines at the base of each arch). ](images/SP-Figure1.jpg)
 
 
 ### How to use it in Brian2?
@@ -32,6 +32,9 @@ In the code one needs to import the module and set up 4 critical module variable
 
 Here is an example of the code:
 ```python
+from brian2 import *
+from lut4brian import *
+
 x=linspace(-100,50,151)
 
 lut4brian.Xmin = -100.
@@ -56,11 +59,11 @@ ninf    = alpha_n*ntau
 lut4brian.tbl = array([minf,hinf,htau,ninf,ntau])
 
 ```
-The table `lut4brian.tbl`' has shape `(5, 151)` - 5 variable to table for 151 points each
+The table `lut4brian.tbl`' has shape, in this case, `(5, 151)` - 5 variable to table for 151 points each
 
 For `cpp_standalone` and `cython` targets, one _needs to create the table on the level of C-code/Cython_ - simple, just call
 ```python
-lutinit
+lutinit()
 ```
 this will create `lut4brian.c` in your current directory. After that tables can be deleted to release memory.
 
@@ -82,9 +85,10 @@ I : amp
 
 ```
 The `lutinterpol` function uses voltage to compute index in the table and returns interpolation value.
-Note we added individual tables in this order `minf,hinf,htau,ninf,ntau` and fetch them in the same order.
+Note we added individual tables in this order `minf,hinf,htau,ninf,ntau` and fetch variables by corresponding 'curve index' - the second argument of the `lutinterpol()` function.
 
 ### Does it work faster than direct computations?
+
 Ya! Check it out. In test directory there are a few benchmarks.
 
 |       | Original   | Lookup table                 |
