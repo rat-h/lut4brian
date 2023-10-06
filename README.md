@@ -1,5 +1,8 @@
 # LookUp Table approximator for [Brian2](https://briansimulator.org/) simulator
 
+## NOTE
+Due to the GitHub enforcement of 2fa, which requires me to share my phone number with Microsoft or install an untrusted Microsoft application on my phone, any updates to this repository will be pushed to its clone at GitLab or to my personal git repository. Please see all updates [here](https://rth.r-a-r.org). Sorry, there should be something private in this life where Microsoft, Google or others don't put their noses.
+
 ### What is Brian?
 Brian is a free, open source simulator for spiking neural networks. It is written in the Python programming language and is available on almost all platforms. We believe that a simulator should not only save the time of processors, but also the time of scientists. Brian is therefore designed to be easy to learn and use, highly flexible and easily extensible.
 
